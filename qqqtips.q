@@ -1,4 +1,11 @@
-
+/ 快速计算布林带的函数
+bollingerBands: {[k;n;data]
+      movingAvg: mavg[n;data];
+      md: mdev[n;data];
+      movingAvg +/:(k*-1 0 1)*\:md
+  };
+dd:bollingerBands[2;20;20+100?5f]
+flip `m`n`p!dd
 / util.q
 / ----------------------------------------------------------------------------
 / NOTE
