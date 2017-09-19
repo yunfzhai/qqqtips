@@ -6,6 +6,25 @@ bollingerBands: {[k;n;data]
   };
 dd:bollingerBands[2;20;20+100?5f]
 flip `m`n`p!dd
+/ kalman滤波
+\d .kalman
+
+filter: {
+    t: ([] x: `float $ x; xh: `float $ x; p: (count x) # R: var x);
+    (first t), iterate[R; R]\[first t; 1 _ t] 
+    }
+
+iterate: {[Q; R; x; y]
+    x[`p]+: Q;
+    k: x[`p] % R + x[`p];
+    `x`xh`p ! (y[`x]; x[`xh] + k * y[`x] - x[`xh]; (1 - k) * x[`p])
+    }
+
+\d .
+
+sdatar2: sdatar ,' .kalman.filter  sdatar.rawdata ;
+
+
 / util.q
 / ----------------------------------------------------------------------------
 / NOTE
